@@ -1,31 +1,30 @@
 #include<bits/stdc++.h>
 using namespace std;
+#define ll  long long  int
 
-string text;
-int min(int a, int b)
+string s1;
+bool check(ll &i,ll &li,ll &N)
 {
-	int res = a;
-	if(b < a)
-		res = b;
-	return res;
+    if((i+li)>=N ||(i-li)<=0) return false;
+    if((i+li+1)%2==0) return true;
+    if(s1[(i+li+1)/2]==s1[(i-li-1)/2]) return true;
+    return false;
 }
-
-string findLongestPalindromicString()
+void lps()
 {
-	int N = text.size();
-	if(N == 0)  return "";
+	ll N = s1.size(),mx=1,center=1,start=-1,diff=-1;
+	if(N == 0)  return;
 	N = 2*N + 1;
-	int L[N];
-	L[0] = L[1]=0;
-	int C=1,R=2,i=0,iMirror,mx=0,center=0,start=-1,endd=-1,diff=-1;
+	ll L[N],C=1,R=2,i,im;
+	L[0] = 0,L[1]=1;
 	for (i = 2; i < N; i++)
 	{
-		iMirror = 2*C-i;
+		im = 2*C-i;
 		L[i] = 0;
 		diff = R - i;
-		if(diff > 0) L[i] = min(L[iMirror], diff);
+		if(diff > 0) L[i] = min(L[im], diff);
 
-		while(((i+L[i])<N &&(i-L[i])>0)&&(((i+L[i]+1)%2==0)||(text[(i+L[i]+1)/2]==text[(i-L[i]-1)/2]))) L[i]++;
+		while(check(i,L[i],N)) L[i]++;
 
 		if(L[i]>mx)
 		{
@@ -38,14 +37,16 @@ string findLongestPalindromicString()
 			R = i+L[i];
 		}
 	}
+	cout<<mx<<endl;
 	start = (center-mx)/2;
-	return text.substr(start,mx);
+    cout<<s1.substr(start,mx)<<endl;
 }
 
-int main(int argc, char *argv[])
+int main()
 {
-    int a;
-	cin >>a>> text ;
-	cout<<findLongestPalindromicString()<<endl;
+    ll a;
+	cin >> a >>s1 ;
+	lps();
 	return 0;
 }
+
