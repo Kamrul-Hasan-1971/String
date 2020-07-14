@@ -16,7 +16,7 @@ string convertString(const string &s)
     return newString;
 }
 
-string longestPalindromeSubstring(const string &s)
+string lps(const string &s)
 {
     string str = convertString(s);
     ll c=0,r=0;
@@ -44,16 +44,16 @@ string longestPalindromeSubstring(const string &s)
         }
     }
 
-    ll maxlen=0,centerIndex=0;
+    ll maxlen=0,indx=0;
     for (ll i = 0; i < str.size() ; i++)
     {
         if (LPS[i] > maxlen)
         {
             maxlen = LPS[i];
-            centerIndex = i;
+            indx = i;
         }
     }
-    return s.substr((centerIndex-maxlen)/2,maxlen);
+    return s.substr((indx-maxlen)/2,maxlen);
 }
 
 int main()
@@ -64,7 +64,7 @@ int main()
     while(T--)
     {
         cin >> s1 ;
-        cout<<longestPalindromeSubstring(s1)<<endl;
+        cout<<lps(s1)<<endl;
     }
     return 0 ;
 }
